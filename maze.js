@@ -1,14 +1,19 @@
+var boundaries;
 window.onload = function () {
-    var boundary1 = document.getElementById("boundary1");
-    boundary1.onmouseover = function () {
-        if (!hasClass(boundary1, "youlose")) {
-            boundary1.className += " youlose";
-        }
-
+    boundaries = document.querySelectorAll(".boundary");
+    for (var i = 0; i < boundaries.length; i++) {
+        boundaries[i].onmouseover = overBounds;
     }
-
 }
 
 function hasClass(element, cls) {
     return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+
+function overBounds() {
+    if (!hasClass(boundaries[0], "youlose")) {
+        for (var i = 0; i < boundaries.length; i++) {
+            boundaries[i].className += " youlose";
+        }
+    }
 }
