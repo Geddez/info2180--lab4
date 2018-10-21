@@ -12,7 +12,9 @@ window.onload = function () {
     start = document.getElementById("start");
     start.onclick = reset;
     statusState = document.getElementById("status");
-    for (var i = 0; i < boundaries.length; i++) {
+    mazeBoundary = document.getElementById("maze");
+    mazeBoundary.onmouseleave = Cheat;
+    for (var i = 0; i < boundaries.length-1; i++) {
         boundaries[i].onmouseover = overBounds;
     }
 }
@@ -26,7 +28,7 @@ function overBounds() {
         if (!outOfBounds) {
             outOfBounds = true;
             statusState.innerText = 'You Lose!,Click the "S" block to reset and play again.';
-            for (var i = 0; i < boundaries.length; i++) {
+            for (var i = 0; i < boundaries.length-1; i++) {
                 boundaries[i].className += " youlose";
             }
         }
@@ -44,8 +46,13 @@ function reset() {
     win = false;
     outOfBounds = false;
     statusState.innerText = 'Move your mouse over the "S" block to begin.';
-    for (var i = 0; i < boundaries.length; i++) {
+    for (var i = 0; i < boundaries.length-1; i++) {
         boundaries[i].className = "boundary";
     }
 
+}
+function Cheat() {
+    if (!win) {
+        overBounds();
+    }
 }
