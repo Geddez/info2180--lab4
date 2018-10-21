@@ -1,6 +1,9 @@
 var boundaries;
 var end;
 var start;
+var statusState;
+var win = false;
+var outOfBounds = false;
 
 window.onload = function () {
     boundaries = document.querySelectorAll(".boundary");
@@ -8,6 +11,7 @@ window.onload = function () {
     end.onmouseover = Win;
     start = document.getElementById("start");
     start.onclick = reset;
+    statusState = document.getElementById("status");
     for (var i = 0; i < boundaries.length; i++) {
         boundaries[i].onmouseover = overBounds;
     }
@@ -18,20 +22,28 @@ function hasClass(element, cls) {
 }
 
 function overBounds() {
-    if (!hasClass(boundaries[0], "youlose")) {
-        for (var i = 0; i < boundaries.length; i++) {
-            boundaries[i].className += " youlose";
+    if (!win) { 
+        if (!outOfBounds) {
+            outOfBounds = true;
+            statusState.innerText = 'You Lose!,Click the "S" block to reset and play again.';
+            for (var i = 0; i < boundaries.length; i++) {
+                boundaries[i].className += " youlose";
+            }
         }
     }
 }
 
 function Win() {
-    if (!hasClass(boundaries[0], "youlose")) {
-        alert("You Win, Congratulations!!!");
+    if (!outOfBounds) {
+        win = true;
+        statusState.innerText = 'You Win!, Click the "S" block to reset and play again.';
     }
 }
 
 function reset() {
+    win = false;
+    outOfBounds = false;
+    statusState.innerText = 'Move your mouse over the "S" block to begin.';
     for (var i = 0; i < boundaries.length; i++) {
         boundaries[i].className = "boundary";
     }
